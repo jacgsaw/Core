@@ -3,6 +3,30 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'memory-util'
+
+    publishedGroupId = 'com.jacgx.jaccore'
+    libraryName = 'Core Jac'
+    artifact = 'jaccore'
+
+    libraryDescription = 'Librería para facilitar el desarrollo en Android.'
+
+    siteUrl = 'https://github.com/codictados/codictados-rep'
+    gitUrl = 'https://github.com/codictados/codictados-rep.git'
+
+    libraryVersion = '1.0.10'
+
+    developerId = 'Jacgsaw'
+    developerName = 'Grupo Jacgsaw'
+    developerEmail = 'alex@jacgx.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
 android {
     namespace 'com.jacgx.jaccore'
     compileSdk 32
