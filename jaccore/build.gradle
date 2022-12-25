@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/jacgsaw/Core'
     gitUrl = 'https://github.com/jacgsaw/Core.git'
 
-    libraryVersion = '1.0.10'
+    libraryVersion = '1.0.3'
 
     developerId = 'Jacgsaw'
     developerName = 'Grupo Jacgsaw'
