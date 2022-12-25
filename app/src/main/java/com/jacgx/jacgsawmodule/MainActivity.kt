@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.jacgx.corejac.CoreV1
-import com.jacgx.jaccore.Core
+import com.jacgx.jaccore.Corev
 
 class MainActivity : AppCompatActivity() {
 
-    private val core = Core()
+    private val core = Corev()
     private val coreV1 = CoreV1()
 
     override fun onCreate(savedInstanceState: Bundle?) {

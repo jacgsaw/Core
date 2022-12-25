@@ -4,17 +4,14 @@ plugins {
 }
 
 ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'memory-util'
-
     publishedGroupId = 'com.jacgx.jaccore'
     libraryName = 'Core Jac'
     artifact = 'jaccore'
 
     libraryDescription = 'Librería para facilitar el desarrollo en Android.'
 
-    siteUrl = 'https://github.com/codictados/codictados-rep'
-    gitUrl = 'https://github.com/codictados/codictados-rep.git'
+    siteUrl = 'https://github.com/jacgsaw/Core'
+    gitUrl = 'https://github.com/jacgsaw/Core.git'
 
     libraryVersion = '1.0.10'
 
@@ -29,11 +26,11 @@ ext {
 
 android {
     namespace 'com.jacgx.jaccore'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         minSdk 26
-        targetSdk 32
+        targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -51,6 +48,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    buildFeatures {
+        prefab = true
     }
 }
 
