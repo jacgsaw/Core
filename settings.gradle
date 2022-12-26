@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "JacgsawModule"
 include ':app'
 include ':jaccore'
-include ':corejac'
+//include ':corejac'
