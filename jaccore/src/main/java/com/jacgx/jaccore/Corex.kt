@@ -1,8 +1,8 @@
 package com.jacgx.jaccore
 
-open class Corev {
+open class Corex {
 
-    fun getCore() = "Ok"
+    fun getCore() = "Ok-"
 
     companion object {
         const val EMPTY_STRING = ""

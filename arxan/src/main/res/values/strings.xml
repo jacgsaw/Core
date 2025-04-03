@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="red_dav">#de111b</color>
+    <dimen name="fab_margin">16dp</dimen>
+    <string name="accept">Aceptar</string>
+    <string name="alert_guard">Por seguridad cerramos esta sesión. Le invitamos a contactar a uno de nuestros ejecutivos y compartirle el código %1$s para asesorarle sobre su caso.</string>
+    <string name="close_your_session">Cerramos su sesión</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="title_activity_arxan">ArxanActivity</string>
+</resources>
