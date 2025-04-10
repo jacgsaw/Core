@@ -15,6 +15,7 @@ import com.jacgx.jaccore.Corex
 class MainActivity : AppCompatActivity() {
 
     private lateinit var smsRetrieverManager: SmsRetrieverManager
+    private var receivedOtp: String? = null
 
     private val core = Corex()
     private val sms = GatewaySms()
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
                 val otpCode = extractOtpFromMessage(message)
                 if (otpCode != null) {
                     Log.d("tag", "Código extraído: $otpCode")
+                    receivedOtp = otpCode
                 } else {
                     Log.d("tag", "No se encontró código en el mensaje")
                 }
@@ -58,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             button.text = "Hi ${sms.getSms()}"
-            Toast.makeText(this, "Botón presionado: ${appSignatureHelper.appSignatures}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Botón presionado: ${receivedOtp}", Toast.LENGTH_SHORT).show()
         }
 
         // Comenzar a escuchar SMS

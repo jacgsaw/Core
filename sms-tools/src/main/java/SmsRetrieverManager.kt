@@ -3,6 +3,8 @@ package coe.cyberbank.sms_tools
 import android.content.Context
 import android.content.IntentFilter
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.core.content.ContextCompat
 import com.google.android.gms.auth.api.phone.SmsRetriever
@@ -15,6 +17,8 @@ class SmsRetrieverManager(private val context: Context) {
 
     private var smsBroadcastReceiver: SmsBroadcastReceiver? = null
     private var isReceiverRegistered = false
+    private var timeoutHandler: Handler? = null
+    private var timeoutRunnable: Runnable? = null
 
     /**
      * Comienza a escuchar SMS usando SMS Retriever API
@@ -22,33 +26,24 @@ class SmsRetrieverManager(private val context: Context) {
     fun startListening(listener: SmsBroadcastReceiver.SmsBroadcastListener) {
         val client = SmsRetriever.getClient(context)
         val task = client.startSmsRetriever()
+
         task.addOnSuccessListener {
             Log.d("tag", "SMS Retriever iniciado correctamente")
 
             if (!isReceiverRegistered) {
                 registerReceiver(listener)
+                startManualTimeout(listener)
             }
         }
+
         task.addOnFailureListener { exception ->
             Log.e("tag", "Error iniciando SMS Retriever", exception)
         }
     }
 
     /**
-     * Detiene la escucha de SMS
+     * Registra el BroadcastReceiver dinámicamente
      */
-    fun stopListening() {
-        smsBroadcastReceiver?.let {
-            try {
-                context.unregisterReceiver(it)
-                Log.d("tag", "Receiver desregistrado exitosamente")
-            } catch (e: Exception) {
-                Log.e("tag", "Error al desregistrar receiver", e)
-            }
-            smsBroadcastReceiver = null
-        }
-    }
-
     private fun registerReceiver(listener: SmsBroadcastReceiver.SmsBroadcastListener) {
         smsBroadcastReceiver = SmsBroadcastReceiver(listener)
         val intentFilter = IntentFilter(SmsConstants.SMS_RETRIEVED_ACTION)
@@ -73,6 +68,41 @@ class SmsRetrieverManager(private val context: Context) {
             Log.d("SmsRetrieverManager", "Receiver registrado exitosamente")
         } catch (e: Exception) {
             Log.e("SmsRetrieverManager", "Error al registrar Receiver", e)
+        }
+    }
+
+    /**
+     * Inicia un timeout manual por seguridad
+     */
+    private fun startManualTimeout(listener: SmsBroadcastReceiver.SmsBroadcastListener) {
+        timeoutHandler = Handler(Looper.getMainLooper())
+        timeoutRunnable = Runnable {
+            Log.d("SmsRetrieverManager", "Timeout manual alcanzado")
+            listener.onTimeout()
+            stopListening()
+        }
+        timeoutHandler?.postDelayed(timeoutRunnable!!, 2 * 60 * 1000) // 2 minutos
+    }
+
+    /**
+     * Detiene la escucha de SMS
+     */
+    fun stopListening() {
+        timeoutHandler?.removeCallbacks(timeoutRunnable!!)
+        timeoutHandler = null
+        timeoutRunnable = null
+
+        smsBroadcastReceiver?.let {
+            if (isReceiverRegistered) {
+                try {
+                    context.unregisterReceiver(it)
+                    Log.d("SmsRetrieverManager", "Receiver desregistrado exitosamente")
+                } catch (e: Exception) {
+                    Log.e("SmsRetrieverManager", "Error al desregistrar receiver", e)
+                }
+                isReceiverRegistered = false
+                smsBroadcastReceiver = null
+            }
         }
     }
 }
