@@ -24,13 +24,13 @@ class MainActivity : AppCompatActivity() {
     private fun startSmsRetriever() {
         smsRetrieverManager.startListening(object : SmsBroadcastReceiver.SmsBroadcastListener {
             override fun onSmsReceived(message: String) {
-                Log.d("tag", "Mensaje recibido: $message")
+                Log.d("tag1", "Mensaje recibido: $message")
                 val otpCode = extractOtpFromMessage(message)
                 if (otpCode != null) {
-                    Log.d("tag", "Código extraído: $otpCode")
+                    Log.d("tag2", "Código extraído: $otpCode")
                     receivedOtp = otpCode
                 } else {
-                    Log.d("tag", "No se encontró código en el mensaje")
+                    Log.d("tag3", "No se encontró código en el mensaje")
                 }
 
                 // Opcional: detener el listener cuando recibes el SMS
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onTimeout() {
-                Log.d("tag", "No se recibió SMS (timeout)")
+                Log.d("tag4", "No se recibió SMS (timeout)")
                 smsRetrieverManager.stopListening()
             }
         })
@@ -50,13 +50,13 @@ class MainActivity : AppCompatActivity() {
 
         smsRetrieverManager = SmsRetrieverManager(this)
 
-        Log.d("tag", core.getCore())
+        Log.d("tag5", core.getCore())
 
         val button = findViewById<Button>(R.id.button)
 
         // Obtener el hash de la app
-        Log.d("tag", "get sms: ${sms.getSms()}")
-        Log.e("tag", "key: ${appSignatureHelper.appSignatures}")
+        Log.d("tag6", "get sms: ${sms.getSms()}")
+        Log.e("tag7", "key: ${appSignatureHelper.appSignatures}")
 
         button.setOnClickListener {
             button.text = "Hi ${sms.getSms()}"

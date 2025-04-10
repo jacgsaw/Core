@@ -28,7 +28,7 @@ class SmsRetrieverManager(private val context: Context) {
         val task = client.startSmsRetriever()
 
         task.addOnSuccessListener {
-            Log.d("tag", "SMS Retriever iniciado correctamente")
+            Log.d("tag", "SMS Retriever init ok")
 
             if (!isReceiverRegistered) {
                 registerReceiver(listener)
@@ -37,7 +37,7 @@ class SmsRetrieverManager(private val context: Context) {
         }
 
         task.addOnFailureListener { exception ->
-            Log.e("tag", "Error iniciando SMS Retriever", exception)
+            Log.e("tag", "Error init SMS Retriever", exception)
         }
     }
 
@@ -65,9 +65,9 @@ class SmsRetrieverManager(private val context: Context) {
                 )
             }
             isReceiverRegistered = true
-            Log.d("SmsRetrieverManager", "Receiver registrado exitosamente")
+            Log.d("tag", "Receiver register is ok")
         } catch (e: Exception) {
-            Log.e("SmsRetrieverManager", "Error al registrar Receiver", e)
+            Log.e("tag4", "Error register Receiver", e)
         }
     }
 
@@ -77,7 +77,7 @@ class SmsRetrieverManager(private val context: Context) {
     private fun startManualTimeout(listener: SmsBroadcastReceiver.SmsBroadcastListener) {
         timeoutHandler = Handler(Looper.getMainLooper())
         timeoutRunnable = Runnable {
-            Log.d("SmsRetrieverManager", "Timeout manual alcanzado")
+            Log.d("tag", "Timeout is exit")
             listener.onTimeout()
             stopListening()
         }
@@ -96,9 +96,9 @@ class SmsRetrieverManager(private val context: Context) {
             if (isReceiverRegistered) {
                 try {
                     context.unregisterReceiver(it)
-                    Log.d("SmsRetrieverManager", "Receiver desregistrado exitosamente")
+                    Log.d("tag", "Receiver exit ok")
                 } catch (e: Exception) {
-                    Log.e("SmsRetrieverManager", "Error al desregistrar receiver", e)
+                    Log.e("tag", "Error exit receiver", e)
                 }
                 isReceiverRegistered = false
                 smsBroadcastReceiver = null
