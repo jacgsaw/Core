@@ -6,7 +6,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import coe.cyberbank.arxan.ArxanDialog
-import coe.cyberbank.sms_tools.AppSignatureHelper
+import coe.cyberbank.sms_tools.AppSignatureHelperV1
 import coe.cyberbank.sms_tools.GatewaySms
 import coe.cyberbank.sms_tools.SmsBroadcastReceiver
 import coe.cyberbank.sms_tools.SmsRetrieverManager
@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     private val core = Corex()
     private val sms = GatewaySms()
-    private val signature = AppSignatureHelper
+    private val appSignatureHelper = AppSignatureHelperV1(this)
 
     private fun startSmsRetriever() {
         smsRetrieverManager.startListening(object : SmsBroadcastReceiver.SmsBroadcastListener {
@@ -53,13 +53,12 @@ class MainActivity : AppCompatActivity() {
         val button = findViewById<Button>(R.id.button)
 
         // Obtener el hash de la app
-        val appSignatures = signature.getAppSignatures(this)
-        Log.d("tag", "Hash: ${appSignatures.joinToString()}")
         Log.d("tag", "get sms: ${sms.getSms()}")
+        Log.e("tag", "key: ${appSignatureHelper.appSignatures}")
 
         button.setOnClickListener {
             button.text = "Hi ${sms.getSms()}"
-            Toast.makeText(this, "Botón presionado: ${appSignatures.joinToString()}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Botón presionado: ${appSignatureHelper.appSignatures}", Toast.LENGTH_SHORT).show()
         }
 
         // Comenzar a escuchar SMS

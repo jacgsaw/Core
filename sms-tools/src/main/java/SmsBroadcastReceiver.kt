@@ -11,7 +11,7 @@ open class SmsBroadcastReceiver(
 ) : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        Log.d("tag", "onReceive llamado")
+        Log.d("tag", "onReceive llamado. Listener es nulo? ${listener == null}")
         if (SmsRetriever.SMS_RETRIEVED_ACTION == intent?.action) {
             val extras = intent.extras
             val status = extras?.get(SmsRetriever.EXTRA_STATUS) as? com.google.android.gms.common.api.Status
