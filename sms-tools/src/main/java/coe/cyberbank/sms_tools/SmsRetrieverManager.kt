@@ -81,7 +81,7 @@ class SmsRetrieverManager(private val context: Context) {
             listener.onTimeout()
             stopListening()
         }
-        timeoutHandler?.postDelayed(timeoutRunnable!!, 2 * 60 * 1000) // 2 minutos
+        timeoutHandler?.postDelayed(timeoutRunnable!!, 2 * 60 * 1000)
     }
 
     /**
